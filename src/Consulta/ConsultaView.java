@@ -4,18 +4,15 @@ import Medico.ListaDeMedicos;
 import Paciente.ListaDePacientes;
 import Medico.Medico;
 import Paciente.Paciente;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static javax.swing.JOptionPane.showMessageDialog;
-
 
 public class ConsultaView extends JFrame {
     List<Medico> listaDeMedicosPesquisa;
@@ -25,14 +22,11 @@ public class ConsultaView extends JFrame {
     ListaDeConsultas listaDeConsultas = new ListaDeConsultas();
     JTable pacientesTable = new JTable();
     JTable medicosTable = new JTable();
-
     JTextField pesquisarPacientesText = new JTextField();
     JTextField pesquisarMedicosText = new JTextField();
     JTextField dataText = new JTextField();
-
     Object[][] objetosDePacientes = null;
     Object[][] objetosDeMedicos = null;
-
     String[] colunasDePacientes = new String[]{"Nome", "CPF"};
     String[] colunasDeMedicos = new String[]{"Nome", "Especialidade"};
 
@@ -41,103 +35,69 @@ public class ConsultaView extends JFrame {
         objetosDePacientes = getObjetosDePacientes(listaDePacientes.getList());
         iniciarResetarComponentes();
 
-        JDialog frame = new JDialog(this, "Cadastrar Consultas", Dialog.ModalityType.APPLICATION_MODAL);
-        //  JFrame frame = new JFrame("Cadastrar Consultas");
+        JPanel corpoPanel = getCorpoPanel();
 
-        JPanel corpoPanel = new JPanel();
-        //corpoPanel.setAutoscrolls(true);
-        corpoPanel.setLayout(new BoxLayout(corpoPanel, BoxLayout.PAGE_AXIS));
-        /// corpoPanel.setPreferredSize(new Dimension(500, 300));
-        //   corpoPanel.setMaximumSize(new Dimension(500, 500));
-
-
-        corpoPanel.add(Box.createVerticalStrut(10));
-        JLabel titutoLabel = new JLabel("Pesquise médicos/especialidades e pacientes.");
-        JPanel cabecalhoPanel = new JPanel();
-        cabecalhoPanel.add(titutoLabel);
-        cabecalhoPanel.setLayout(new GridBagLayout());
-        titutoLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+        JPanel cabecalhoPanel = getCabecalhoPanel();
         corpoPanel.add(cabecalhoPanel);
+
         JPanel medicosPacientesPanel = getMedicosPacientesPanels();
         corpoPanel.add(medicosPacientesPanel);
 
+        JPanel datePanel = getDatePanel();
+        corpoPanel.add(datePanel);
+
+        iniciarMostarDialog(corpoPanel);
+    }
+
+    private void iniciarMostarDialog(JPanel corpoPanel) {
+        JDialog dialogFrame = new JDialog(this, "Cadastrar Consultas", Dialog.ModalityType.APPLICATION_MODAL);
+        dialogFrame.getContentPane().add(corpoPanel, BorderLayout.PAGE_START);
+        dialogFrame.setPreferredSize(new Dimension(500, 500));
+        dialogFrame.setLocationRelativeTo(null);
+        dialogFrame.pack();
+        dialogFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        dialogFrame.setModal(true);
+        dialogFrame.setVisible(true);
+    }
+
+    private JPanel getCorpoPanel() {
+        JPanel corpoPanel = new JPanel();
+        corpoPanel.setLayout(new BoxLayout(corpoPanel, BoxLayout.PAGE_AXIS));
+        corpoPanel.add(Box.createVerticalStrut(10));
+        return corpoPanel;
+    }
+
+    private JPanel getCabecalhoPanel() {
+        JLabel titutoLabel = new JLabel("Pesquise médicos/especialidades e pacientes.");
+        titutoLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+        JPanel cabecalhoPanel = new JPanel();
+        cabecalhoPanel.add(titutoLabel);
+        cabecalhoPanel.setLayout(new GridBagLayout());
+        return cabecalhoPanel;
+    }
+
+    private JPanel getDatePanel() {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.gridx = 0;
         gbc.gridy = 0;
-
-
         JPanel datePanel = new JPanel();
-
         datePanel.setLayout(new BoxLayout(datePanel, BoxLayout.LINE_AXIS));
         datePanel.setPreferredSize(new Dimension(300, 30));
         datePanel.setMaximumSize(new Dimension(500, 30));
         datePanel.add(Box.createHorizontalStrut(10));
         datePanel.add(new JLabel("Informe uma data (dia/mês/ano): "));
-
-//        dataText.addKeyListener(new KeyListener() {
-//            @Override
-//            public void keyTyped(KeyEvent e) {
-//                //    System.out.println(((JTextField) e.getSource()).getText());
-//            }
-//
-//            @Override
-//            public void keyPressed(KeyEvent e) {
-//                //  System.out.println(((JTextField) e.getSource()).getText());
-//            }
-//
-//            @Override
-//            public void keyReleased(KeyEvent e) {
-//                String t = ((JTextField) e.getSource()).getText();
-//                if (t.length() == 10) {
-//
-//                    try{
-//                        LocalDate d = LocalDate.parse(t, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-//                        System.out.println(d);
-//                    }
-//                    catch (Exception ex) {
-//                        showMessageDialog(null, "Por favor informe uma data válida! \n Exemplo: 01/03/2020");
-//                    }
-//
-//                }
-//
-//            }
-//
-//        });
         datePanel.add(dataText);
+
         JButton buttonConsulta = new JButton("Adicionar consulta");
         buttonConsulta.addActionListener((e) -> {
-            adicionarConsulta(dataText);
+            adicionarConsulta();
         });
         datePanel.add(buttonConsulta);
-
-        corpoPanel.add(datePanel);
-
-
-//
-//        JPanel panel = new JPanel();
-//        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
-//        panel.setBorder(BorderFactory.createTitledBorder("Adicionar Consultas"));
-//        panel.add(cabecalhoPanel, gbc);
-//
-//        gbc.gridx = GridBagConstraints.RELATIVE;;
-        // gbc.gridy = 1;
-
-
-        frame.setPreferredSize(new Dimension(500, 500));
-        frame.getContentPane().add(corpoPanel, BorderLayout.PAGE_START);
-        frame.setLocationRelativeTo(null);
-        frame.setMaximumSize(new Dimension(500, 500));
-        frame.setMinimumSize(new Dimension(500, 500));
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        // frame.setAlwaysOnTop(true);
-        frame.setModal(true);
-        frame.setVisible(true);
-
+        return datePanel;
     }
 
-    private void adicionarConsulta(JTextField dataText) {
+    private void adicionarConsulta() {
         String data = dataText.getText();
         Date consultaDate = null;
         try {

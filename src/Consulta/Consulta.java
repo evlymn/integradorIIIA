@@ -2,12 +2,10 @@ package Consulta;
 
 import Medico.Medico;
 import Paciente.Paciente;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public class Consulta {
     int id;
@@ -46,7 +44,6 @@ public class Consulta {
 
     @Override
     public String toString() {
-
         return String.format("Id:%s Medico: %s, Paciente: %s, Data: %s", getId(), getMedico().getNome(), getPaciente().getNome(), getDataConsultaFormatted());
     }
 }
