@@ -1,25 +1,11 @@
 package Consulta;
-
-import Medico.Medico;
-import Paciente.Paciente;
-import Utils.Sys;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 import java.awt.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class ListaConsultasView extends JFrame {
-
     ListaDeConsultas listaDeConsultas = new ListaDeConsultas();
-
     List<Consulta> listaDeConsultasPesquisa = null;
     JTextField pesquisarText = new JTextField();
     JTable table = new JTable();
@@ -28,61 +14,9 @@ public class ListaConsultasView extends JFrame {
 
     public ListaConsultasView() {
 
-        Date d = Calendar.getInstance().getTime();
-        System.out.println(d.getTime());
-        System.out.println(d.hashCode());
-
-//
-//
-//
-//        listaDeConsultas.add( new Consulta(new Medico("Everrrlyn","3333","Acupuntura"),
-//                new Paciente("Marcela", "00000", "endereco"),
-//                new Date(2020,2,2)));
-//        listaDeConsultas.add( new Consulta(new Medico("Evelyn","3333","Acupuntura"),
-//                new Paciente("Marrrrrrcela", "00000", "endereco"),
-//                new Date(2020, Calendar.JANUARY,2)));
-//        listaDeConsultas.add( new Consulta(new Medico("Evelyn","3333","Acupuntura"),
-//                new Paciente("Marcela", "00000", "endereco"),
-//                new Date(2023,2,2)));
-//        listaDeConsultas.add( new Consulta(new Medico("Evelyn","3333","Acupuntura"),
-//                new Paciente("Marcela", "00000", "endereco"),
-//                new Date(2020,2,2)));  listaDeConsultas.add( new Consulta(new Medico("Evelyn","3333","Acupuntura"),
-//                new Paciente("Marcela", "00000", "endereco"),
-//                new Date(2020,2,2)));  listaDeConsultas.add( new Consulta(new Medico("Evelyn","3333","Acupuntura"),
-//                new Paciente("Marcela", "00000", "endereco"),
-//                new Date(2020,2,2)));
-//        listaDeConsultas.add( new Consulta(new Medico("Evelyn","3333","Acupuntura"),
-//                new Paciente("Marcela", "00000", "endereco"),
-//                new Date(2020,2,2)));
-//        listaDeConsultas.add( new Consulta(new Medico("Evelyn","3333","Acupuntura"),
-//                new Paciente("Marcela", "00000", "endereco"),
-//                new Date(2020,2,2)));
-//        listaDeConsultas.add( new Consulta(new Medico("Evelyn","3333","Acupuntura"),
-//                new Paciente("Marcela", "00000", "endereco"),
-//                new Date(2020,2,2)));
-//        listaDeConsultas.add( new Consulta(new Medico("Evelyn","3333","Acupuntura"),
-//                new Paciente("Marcela", "00000", "endereco"),
-//                new Date(2020,2,2)));
-//        listaDeConsultas.add( new Consulta(new Medico("Evelyn","3333","Acupuntura"),
-//                new Paciente("Marcela", "00000", "endereco"),
-//                new Date(2020,2,2)));
-//        listaDeConsultas.add( new Consulta(new Medico("Evelyn","3333","Acupuntura"),
-//                new Paciente("Marcela", "00000", "endereco"),
-//                new Date(2020,2,2)));
-//        listaDeConsultas.add( new Consulta(new Medico("Evelyn","3333","Acupuntura"),
-//                new Paciente("Marcela", "00000", "endereco"),
-//                new Date(2020,2,2)));
-//        listaDeConsultas.add( new Consulta(new Medico("Evelyn","3333","Acupuntura"),
-//                new Paciente("Marcela", "00000", "endereco"),
-//                new Date(2020,2,2)));
-
-
         JDialog frame = new JDialog(this, "Listar Consultas", Dialog.ModalityType.APPLICATION_MODAL);
-
-
         JPanel corpoPanel = new JPanel();
         corpoPanel.setLayout(new BoxLayout(corpoPanel, BoxLayout.PAGE_AXIS));
-
 
         JPanel cabecalhoPanel = new JPanel();
 
@@ -110,8 +44,6 @@ public class ListaConsultasView extends JFrame {
         table.setModel(model);
         table.setDragEnabled(false);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        //th.setReorderingAllowed(false);
-
 
         corpoPanel.add(Box.createVerticalStrut(10));
 
